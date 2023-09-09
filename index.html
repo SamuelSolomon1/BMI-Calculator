@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BMI Calculator</title>
+    <style>
+      #container {
+        border: 2px solid white;
+        display: block;
+        background-color: #e3fdfd;
+        border-radius: 20px;
+        margin: auto;
+        flex-direction: column;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 20px;
+        max-width: 400px;
+        margin-top: 150px;
+        font-size: 20px;
+        font-family: sans-serif;
+      }
+      #box {
+        text-align: center;
+        font-size: 40px;
+      }
+      /* dropdown button */
+      .box-border {
+        font-size: 15px;
+      }
+      /* button start*/
+      button {
+        text-align: center;
+        /* background-color: #71c9ce; */
+        border-radius: 20px;
+        padding: 10px;
+        font-size: 20px;
+      }
+      #button-border {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      /* button end */
+      body {
+        background-color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div id="container">
+        <h1 id="box">BMI Calculator</h1>
+        <hr />
+        <br />
+        
+        <label for="height ">Height:</label>
+        <input type="number" id="height" class="box-border" />
+        <select id="heightUnit" class="box-border">
+          <option value="cm">Centimeters</option>
+          <option value="m">Meters</option>
+          <option value="in">Inches</option></select
+        ><br /><br />
+        <label for="weight">Weight:</label>
+        <input type="number" id="weight" class="box-border" />
+        <select id="weightUnit" class="box-border">
+          <option value="kg">Kilograms</option>
+          <option value="lb">Pounds</option>
+          <option value="stone">Stones</option></select
+        ><br /><br />
+        <div id="button-border">
+          <!-- button -->
+          <button onclick="bmiCalculator()">Calculate BMI</button>
+        </div>
+        <p>BMI : <span id="myResult"></span></p>
+        <p id="myStatus"></p>
+      </div>
+    </main>
+
+    <!-- Scripts -->
+    <script>
+      function bmiCalculator() {
+        let bmi = 0;
+        let height = Number(document.getElementById("height").value);
+        let heightUnit = document.getElementById("heightUnit").value;
+        let weight = Number(document.getElementById("weight").value);
+        let weightUnit = document.getElementById("weightUnit").value;
+
+        //validation starts
+        // https://www.w3schools.com/jsref/jsref_operators.asp#gsc.tab=0
+        if (!height || !weight) {
+          document.getElementById("myResult").textContent = "";
+          document.getElementById("myStatus").textContent = "";
+          alert("Please enter both height and weight.");
+          return;
+        }
+        // validation ends
+        if (heightUnit === "cm") {
+          height /= 100;
+        } else if (heightUnit === "in") {
+          height *= 0.0254;
+        }
+        if (weightUnit === "lb") {
+          weight *= 0.453592;
+        } else if (weightUnit === "stone") {
+          weight *= 6.35029;
+        }
+        // Calculate BMI
+        bmi = Math.floor(weight / (height * height));
+        document.getElementById("myResult").textContent = bmi;
+        // Indentify BMI
+        if (bmi < 18.5) {
+          document.getElementById("myStatus").textContent = "Underweight";
+        } else if (bmi >= 18.5 && bmi < 25) {
+          document.getElementById("myStatus").textContent = "Normal Weight";
+        } else if (bmi >= 25 && bmi < 40) {
+          document.getElementById("myStatus").textContent = "Overweight";
+        } else {
+          document.getElementById("myStatus").textContent = "Obese";
+        } 
+      }
+    </script>
+  </body>
+</html>
+<!--Prettier automatically adds "/" in self closing bracket -->
+
